@@ -15,6 +15,7 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const authRoutes = require('./routes/auth');
 const teamRoutes = require('./routes/teams');
+const taskRoutes = require('./routes/tasks');
 
 /** Sessions live in PostgreSQL; in development they can fall back to process memory. */
 function buildSessionStore() {
@@ -62,6 +63,7 @@ function createApp() {
   app.use('/api/auth', authRoutes);
   // Everything below requires a logged-in session.
   app.use('/api/teams', requireAuth, teamRoutes);
+  app.use('/api/tasks', requireAuth, taskRoutes);
 
   app.use('/api', notFound);
 
