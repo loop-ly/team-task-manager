@@ -9,8 +9,11 @@ const connectPgSimple = require('connect-pg-simple');
 
 const config = require('./config/env');
 const pool = require('./db/pool');
+const passport = require('./auth/passport');
+const { requireAuth } = require('./middleware/auth');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
+const authRoutes = require('./routes/auth');
 
 /** Sessions live in PostgreSQL; in development they can fall back to process memory. */
 function buildSessionStore() {
@@ -49,10 +52,14 @@ function createApp() {
       },
     })
   );
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   // Public: liveness probe only, exposes nothing.
   app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
+  app.use('/api/auth', authRoutes);
+  // Everything below requires a logged-in session.
 
   app.use('/api', notFound);
 
