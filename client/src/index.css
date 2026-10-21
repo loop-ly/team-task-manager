@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/manrope';
+
+/* Design tokens. Ink-dark primary actions, cobalt reserved for selection and focus. */
+@theme {
+  --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-canvas: #f4f6f9;
+  --color-ink: #162029;
+  --color-ink-soft: #2b3844;
+  --color-muted: #64707d;
+  --color-line: #e2e7ee;
+
+  --color-cobalt: #2457d6;
+  --color-cobalt-soft: #e8eefc;
+
+  --color-todo: #8693a1;
+  --color-progress: #d99a14;
+  --color-done: #2f9e6a;
+  --color-danger: #c8383f;
+  --color-danger-soft: #fdecec;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-cobalt;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Reusable control styles so every form looks the same. */
+@utility input {
+  @apply w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-muted/70 focus:border-cobalt focus:outline-none focus:ring-2 focus:ring-cobalt/25 disabled:bg-canvas disabled:text-muted;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+}
+@utility btn-primary {
+  @apply btn bg-ink text-white hover:bg-ink-soft;
+}
+@utility btn-secondary {
+  @apply btn border border-line bg-white text-ink hover:bg-canvas;
+}
+@utility btn-danger {
+  @apply btn bg-danger text-white hover:bg-danger/90;
+}
+@utility btn-ghost {
+  @apply btn px-2.5 text-muted hover:bg-canvas hover:text-ink;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.modal-panel {
+  animation: modal-in 0.16s ease-out;
+}
