@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import AuthPage from './pages/AuthPage';
+import Dashboard from './pages/Dashboard';
 import Spinner from './components/ui/Spinner';
 
 /** Only logged-in users get through; everyone else is sent to the login page. */
@@ -22,8 +23,8 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<PublicOnlyRoute><AuthPage key="login" mode="login" /></PublicOnlyRoute>} />
       <Route path="/register" element={<PublicOnlyRoute><AuthPage key="register" mode="register" /></PublicOnlyRoute>} />
-      <Route path="/" element={<ProtectedRoute><p className="p-6">Dashboard coming soon</p></ProtectedRoute>} />
-      <Route path="/teams/:teamId" element={<ProtectedRoute><p className="p-6">Dashboard coming soon</p></ProtectedRoute>} />
+      <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/teams/:teamId" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
